@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
-    width: 20%;
+    width: 100%;
     border: 1px solid;
     display: flex;
     justify-content: center;
