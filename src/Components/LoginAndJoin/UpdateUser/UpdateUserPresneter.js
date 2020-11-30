@@ -133,17 +133,19 @@ const MaleSelectButton = styled.input.attrs({type:"radio"})``;
 const FemaleSelectButton = styled.input.attrs({type:"radio"})``;
 
 export default ({
-    setLoginForm,
     joinForm,
-    setJoinForm, 
-    inputTextId,
+    setJoinForm,
+    updateUserForm,
+    setUpdateUserForm, 
     inputTextName,
     inputTextEmail,
     inputTextPassword,
-    inputTextNickName,
     inputTextPasswordCheck,
     inputCheckGender,
+    inputTextNickName,
     data,
+    findUserLoading,
+    findUser,
     loading,
     submit
     }) => {
@@ -160,12 +162,11 @@ export default ({
                 return false;
             }
           };
-
-    return (
+    return (    
         <Container >  
-            <Background onClick={()=>{setJoinForm(!joinForm)}}/>
+            <Background onClick={()=>{setUpdateUserForm(!updateUserForm)}}/>
             <MainForm >
-                <Title>회원가입</Title>
+                <Title>내 정보 수정</Title>
                 <InputForm>
                     <EmailInput placeholder="이메일" {...inputTextEmail}/>
                     {!loading ? 
@@ -175,8 +176,8 @@ export default ({
                                 "사용가능한 이메일입니다."
                             : "이메일을 제대로 입력해주세요."
                         : "확인중입니다."}
-                    <NameInput placeholder="이름" {...inputTextName} />
-                    <NameInput placeholder="닉네임" {...inputTextNickName} />
+                    <NameInput id="NameInput" placeholder="이름" {...inputTextName} />
+                    <NameInput id="NameInput" placeholder="닉네임" {...inputTextNickName} />
                     <GenderBox>
                         <MaleButton >
                             <Text htmlFor="male">남자</Text>
@@ -205,21 +206,6 @@ export default ({
                         }
                     }}>회원가입</JoinButton>
                 </InputForm>
-                <ActionBox>
-                    <LoginButton onClick={()=>{
-                         setJoinForm(!joinForm);
-                         setLoginForm(true);
-                    }}>로그인</LoginButton>
-                    <FindBox>
-                        <FindId href="#">
-                            아이디찾기
-                        </FindId> 
-                        / 
-                        <FindPW href="#">
-                            비밀번호 찾기
-                        </FindPW>
-                    </FindBox>
-                </ActionBox>
             </MainForm>
 
         </Container> 

@@ -1,33 +1,34 @@
 import React from "react";
+import UpdateUserPresenter from "./UpdateUserPresneter";
 import { useMutation, useQuery } from "react-apollo-hooks";
 import useInput from "../../../Public/useInput";
-import JoinFormPresenter from "./JoinFormPresenter";
-import { CREATE_USER, OVERLAP_USER } from "./JoinFormQuery";
+import { OVERLAP_USER } from "../JoinForm/JoinFormQuery";
+import { FIND_USER, UPDATE_USER } from "./UpdateUserQuery";
 
 export default ({
     joinForm,
     setJoinForm,
     loginForm,
-    setLoginForm
+    setLoginForm,
+    updateUserForm,
+    setUpdateUserForm
 }) =>{
+
+    const {
+        data:findUser,
+        loading:findUserLoading,
+        error:findUserError
+    } = useQuery(FIND_USER);
+
     
     const inputTextId = useInput("");
     const inputTextName = useInput("");
     const inputTextEmail = useInput("");
     const inputTextPassword = useInput("");
     const inputTextPasswordCheck = useInput("");
-    const inputTextNickName = useInput("");
     const inputCheckGender = useInput("");
+    const inputTextNickName = useInput("");
 
-    const [joinUser] = useMutation(CREATE_USER,{
-        variables:{
-            username: inputTextName.value,
-            gender: inputCheckGender.value,
-            email: inputTextEmail.value,
-            password: inputTextPassword.value,
-            nickname: inputTextNickName.value
-        }
-    });
 
     const {
         data,
@@ -37,29 +38,35 @@ export default ({
         variables:{email: inputTextEmail.value}
     });
 
-   console.log(data, inputTextEmail.value, loading);
+    const [updateUser] = useMutation(UPDATE_USER);
 
     const submit = () => {
-        joinUser();
-        setLoginForm(!loginForm);
-        setJoinForm(!joinForm);
+        setUpdateUserForm(!updateUserForm);
+        updateUser({variables:{
+            username: inputTextName.value,
+            gender: inputCheckGender.value,
+            email: inputTextEmail.value,
+            password: inputTextPassword.value,
+            nickname: inputTextNickName.value
+        }})
     }
 
     return (
-        <JoinFormPresenter 
+        <UpdateUserPresenter
             inputTextId={inputTextId}
             inputTextName={inputTextName}
             inputTextEmail={inputTextEmail}
             inputTextPassword={inputTextPassword}
             inputTextPasswordCheck={inputTextPasswordCheck}
-            inputTextNickName={inputTextNickName}
             inputCheckGender={inputCheckGender}
+            inputTextNickName={inputTextNickName}
             joinForm={joinForm}
             setJoinForm={setJoinForm}
-            loginForm={loginForm}
-            setLoginForm={setLoginForm}
+            updateUserForm={updateUserForm}
+            setUpdateUserForm={setUpdateUserForm}
             data={data}
             loading={loading}
+            findUser={findUser}
             submit={submit}
         />
     );

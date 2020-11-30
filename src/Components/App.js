@@ -3,10 +3,11 @@ import React, { useState } from "react";
 import {HashRouter} from "react-router-dom";
 import GlobalStyles from "../GlobalStyles/GlobalStyles";
 import LoginBox from "./MainPage/LoginBox";
-import SideMenu from "./MainPage/SideMenu";
-import Board from "./MainPage/Board";
 import LoginForm from "./LoginAndJoin/LoginForm";
 import JoinForm from "./LoginAndJoin/JoinForm";
+import UpdateUserForm from "./LoginAndJoin/UpdateUser";
+import Routes from "./Routes";
+
 
 const Container = styled.div`
   display: flex;
@@ -28,6 +29,7 @@ const Side = styled.div`
   border: 1px solid;
   display:flex;
   align-items:center;
+  border-radius:5px;
 `;
 
 
@@ -35,6 +37,8 @@ export default () => {
   
   const [loginForm, setLoginForm] = useState(false);
   const [joinForm, setJoinForm] = useState(false);
+  const [updateUserForm, setUpdateUserForm] = useState(false);
+
   return (
   <Container className="App">
       <GlobalStyles/>
@@ -55,16 +59,33 @@ export default () => {
               setJoinForm={setJoinForm}
               loginForm={loginForm}
               setLoginForm={setLoginForm}
+              updateUserForm={updateUserForm}
+              setUpdateUserForm={setUpdateUserForm}
+            />
+            : ""
+          }
+          {updateUserForm? 
+            <UpdateUserForm 
+              joinForm={joinForm} 
+              setJoinForm={setJoinForm}
+              loginForm={loginForm}
+              setLoginForm={setLoginForm}
+              updateUserForm={updateUserForm}
+              setUpdateUserForm={setUpdateUserForm}
             />
             : ""
           }
             <Side>
-          
-              <LoginBox setLoginForm={setLoginForm} loginForm={loginForm}/>
-           
+              <LoginBox 
+                setLoginForm={setLoginForm} 
+                loginForm={loginForm}
+                updateUserForm={updateUserForm}
+                setUpdateUserForm={setUpdateUserForm}
+              />
               {/* <SideMenu  /> */}
             </Side>
-            <Board />
+            <Routes />
+           
           </HashRouter>
         </Content>
     </Container>

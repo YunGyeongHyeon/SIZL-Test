@@ -16,30 +16,23 @@ export default ({
     const inputTextId = useInput("");
     const inputTextPassword = useInput("");
 
-
-    const {
-        data,
-        loading,
-        error
-    } = useQuery(LOG_IN,{
-        variables:{
-            email: inputTextId.value,
-            password: inputTextPassword.value 
-        }
-    });
+    const [loginSubmit] = useMutation(LOG_IN);
 
     const onSubmit = async() => {
-        if(!loading){
-            const token = data.login;
-            if(data.login !== "" && data.login !== undefined){
-                await localLogInMutation({ variables: { token } });
-                localStorage.setItem("userEmailToken", inputTextId.value);
-            }
+       const tokenObj = await loginSubmit({variables:{ email: inputTextId.value,
+            password: inputTextPassword.value }});
+            
+            const token = tokenObj.data.login;
+            console.log(token);
+        if(token){         
+            await localLogInMutation({ variables: { token } });
+            localStorage.setItem("userEmailToken", inputTextId.value);
             window.location.reload();
         }else{
-            alert("잠시만 기다려주세요");
+            alert("이메일 및 비밀번호가 다릅니다.");
         }
     }
+    
 
     return (
         <LoginFormPresenter 

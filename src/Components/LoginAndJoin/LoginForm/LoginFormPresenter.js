@@ -38,7 +38,7 @@ const MainForm = styled.div`
 `;
 
 const Title = styled.span`
-    font-size:1.5em;
+    font-size:1.2em;
     padding-bottom:15px;
 `;
 
@@ -116,8 +116,8 @@ export default ({
             <MainForm >
                 <Title>로그인</Title>
                 <InputForm>
-                    <IdInput placeholder="ID" {...inputTextId} />
-                    <PwInput placeholder="Password" {...inputTextPassword} />
+                    <IdInput placeholder="이메일" {...inputTextId} />
+                    <PwInput placeholder="비밀번호" {...inputTextPassword} />
                     <LoginButton onClick={()=>{
                         onSubmit();
                     }}>로그인</LoginButton>

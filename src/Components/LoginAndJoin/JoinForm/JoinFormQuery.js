@@ -5,13 +5,15 @@ export const CREATE_USER = gql`
         $username: String!,
         $gender: String!,
         $email: String!,
-        $password: String!
+        $password: String!,
+        $nickname: String
         ){
             createAccount(
                 username: $username
                 gender: $gender
                 email: $email
                 password: $password
+                nickname: $nickname
                 
             )
         }
