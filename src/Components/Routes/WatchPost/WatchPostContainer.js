@@ -36,7 +36,7 @@ export default withRouter ((props) => {
         } = useQuery(FIND_USER);
 
         const [uploadComment] = useMutation(UPLOAD_COMMENT);
-
+        console.log(loginInfo, loginInfoLoading);
         const commentSubmit = () => {
                 uploadComment({
                     variables:{
@@ -47,6 +47,7 @@ export default withRouter ((props) => {
         }   
         if(!loading && !loginInfoLoading){
             const postData = data.searchPost;
+            console.log(postData);
             return (
                 <WatchPostPresenter 
                     PostData={postData} 

@@ -98,7 +98,7 @@ export default ({allPostData, loginInfo}) => (
     <Container >
         <BoardHeader>
             <Title>
-                자유게시판 {console.log({ loginInfo })}
+                자유게시판 
             </Title>
             {loginInfo.findUser.email ? 
                 <CreatePost onClick={()=>{}}>

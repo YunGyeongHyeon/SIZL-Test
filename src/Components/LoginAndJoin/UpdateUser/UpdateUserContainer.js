@@ -4,6 +4,15 @@ import { useMutation, useQuery } from "react-apollo-hooks";
 import useInput from "../../../Public/useInput";
 import { OVERLAP_USER } from "../JoinForm/JoinFormQuery";
 import { FIND_USER, UPDATE_USER } from "./UpdateUserQuery";
+import styled from "styled-components";
+
+const Loading = styled.div`
+    display:flex;
+    justify-content:center;
+    width:100%;
+    height:100%;
+`;
+
 
 export default ({
     joinForm,
@@ -20,6 +29,7 @@ export default ({
         error:findUserError
     } = useQuery(FIND_USER);
 
+    console.log(findUser);
     
     const inputTextId = useInput("");
     const inputTextName = useInput("");
@@ -50,24 +60,28 @@ export default ({
             nickname: inputTextNickName.value
         }})
     }
+    if(!findUserLoading ){
+        return (
+            <UpdateUserPresenter
+                inputTextId={inputTextId}
+                inputTextName={inputTextName}
+                inputTextEmail={inputTextEmail}
+                inputTextPassword={inputTextPassword}
+                inputTextPasswordCheck={inputTextPasswordCheck}
+                inputCheckGender={inputCheckGender}
+                inputTextNickName={inputTextNickName}
+                joinForm={joinForm}
+                setJoinForm={setJoinForm}
+                updateUserForm={updateUserForm}
+                setUpdateUserForm={setUpdateUserForm}
+                data={data}
+                loading={loading}
+                findUser={findUser.findUser}
+                submit={submit}
+            />
+        );
 
-    return (
-        <UpdateUserPresenter
-            inputTextId={inputTextId}
-            inputTextName={inputTextName}
-            inputTextEmail={inputTextEmail}
-            inputTextPassword={inputTextPassword}
-            inputTextPasswordCheck={inputTextPasswordCheck}
-            inputCheckGender={inputCheckGender}
-            inputTextNickName={inputTextNickName}
-            joinForm={joinForm}
-            setJoinForm={setJoinForm}
-            updateUserForm={updateUserForm}
-            setUpdateUserForm={setUpdateUserForm}
-            data={data}
-            loading={loading}
-            findUser={findUser}
-            submit={submit}
-        />
-    );
+    }else{
+        return "";
+    }
 }

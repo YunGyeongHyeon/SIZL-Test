@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import useInput from "../../../Public/useInput";
 
@@ -149,6 +150,15 @@ export default ({
     loading,
     submit
     }) => {
+
+        const [ inputName, setInputName ] = useState(findUser.username);
+        const [ inputEmail, setInputEmail ] = useState(findUser.email);
+        const [ inputGender, setInputGender ] = useState(findUser.gender);
+        const [ inputNickName, setInputNickName ] = useState(findUser.nickname);
+        inputTextName.setValue(inputName);
+        inputTextEmail.setValue(inputEmail);
+        inputCheckGender.setValue(inputGender);
+        inputTextNickName.setValue(inputNickName);
         const verifyEmail = () => {
             let emailValue = inputTextEmail.value;
 
@@ -168,7 +178,12 @@ export default ({
             <MainForm >
                 <Title>내 정보 수정</Title>
                 <InputForm>
-                    <EmailInput placeholder="이메일" {...inputTextEmail}/>
+                    <EmailInput placeholder="이메일" 
+                        onChange={(e)=>{
+                            setInputEmail(e.target.value);
+                        }}
+                        value={inputEmail}
+                    />
                     {!loading ? 
                         verifyEmail() ? 
                             data.overlapUser ? 
@@ -176,8 +191,14 @@ export default ({
                                 "사용가능한 이메일입니다."
                             : "이메일을 제대로 입력해주세요."
                         : "확인중입니다."}
-                    <NameInput id="NameInput" placeholder="이름" {...inputTextName} />
-                    <NameInput id="NameInput" placeholder="닉네임" {...inputTextNickName} />
+                    <NameInput id="NameInput" placeholder="이름" onChange={(e)=>{
+                            setInputName(e.target.value);
+                        }}
+                        value={inputName}/>
+                    <NameInput id="NameInput" placeholder="닉네임" onChange={(e)=>{
+                            setInputNickName(e.target.value);
+                        }}
+                        value={inputNickName} />
                     <GenderBox>
                         <MaleButton >
                             <Text htmlFor="male">남자</Text>
